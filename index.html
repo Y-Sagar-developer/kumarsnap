@@ -1,0 +1,1474 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Security Alert - v5</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at center,
+            #350000 0%,
+            #090000 38%,
+            #020202 80%
+        );
+
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 20px 0 40px;
+
+    overflow-y: auto;
+}
+
+
+/* Background grid */
+
+.grid {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(255,0,0,.04) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,0,0,.04) 1px,
+            transparent 1px
+        );
+
+    background-size: 42px 42px;
+}
+
+
+/* Card */
+
+.card {
+    position: relative;
+    z-index: 2;
+
+    width: min(94%, 680px);
+
+    padding: 28px;
+
+    background: rgba(7,7,7,.97);
+
+    border: 1px solid #551818;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 0 90px rgba(255,0,0,.20),
+        0 25px 80px rgba(0,0,0,.8);
+
+    text-align: center;
+}
+
+
+/* Top warning */
+
+.alert-bar {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #ff4040;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 20px;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+
+    background: #ff2020;
+
+    border-radius: 50%;
+
+    box-shadow: 0 0 12px red;
+
+    animation: blink .6s infinite;
+}
+
+@keyframes blink {
+
+    50% {
+        opacity: .2;
+    }
+}
+
+
+/* Icon */
+
+.warning {
+    width: 72px;
+    height: 72px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: #290606;
+
+    border: 1px solid #ff3030;
+
+    color: #ff3030;
+
+    font-size: 38px;
+
+    font-weight: bold;
+
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+
+    50% {
+        transform: scale(1.07);
+
+        box-shadow:
+            0 0 50px rgba(255,0,0,.55);
+    }
+}
+
+
+/* Heading */
+
+h1 {
+    margin-top: 18px;
+
+    color: #ff3838;
+
+    font-size: 28px;
+}
+
+.subtitle {
+    margin-top: 9px;
+
+    color: #8c8c8c;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* Account box */
+
+.account {
+    margin-top: 23px;
+
+    padding: 16px;
+
+    background: #101010;
+
+    border: 1px solid #292929;
+
+    border-radius: 13px;
+
+    text-align: left;
+}
+
+.row {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #222;
+
+    font-size: 13px;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.label {
+    color: #666;
+}
+
+.value {
+    color: #eee;
+
+    font-weight: bold;
+
+    text-align: right;
+}
+
+
+/* Scan */
+
+.scan {
+    margin-top: 23px;
+
+    text-align: left;
+}
+
+.scan-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 12px;
+
+    color: #aaa;
+}
+
+.percent {
+    color: #ff4848;
+
+    font-weight: bold;
+}
+
+.progress {
+    width: 100%;
+
+    height: 8px;
+
+    margin-top: 9px;
+
+    background: #1c1c1c;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.bar {
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #e00000,
+            #ff6666
+        );
+
+    box-shadow:
+        0 0 14px #ff2020;
+
+    transition: width .12s;
+}
+
+.status {
+    margin-top: 9px;
+
+    color: #777;
+
+    font-size: 11px;
+}
+
+
+/* Media */
+
+.media {
+    margin-top: 22px;
+
+    padding: 15px;
+
+    background: #0b0b0b;
+
+    border: 1px solid #292929;
+
+    border-radius: 13px;
+
+    text-align: left;
+}
+
+.media-head {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 11px;
+}
+
+.media-title {
+    font-size: 12px;
+
+    color: #ddd;
+
+    font-weight: bold;
+}
+
+.count {
+    color: #ff5050;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.photos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 1fr);
+
+    gap: 6px;
+}
+
+.photo {
+    aspect-ratio: 1;
+
+    border-radius: 7px;
+
+    overflow: hidden;
+
+    background: #171717;
+
+    border: 1px solid #292929;
+
+    opacity: 0;
+
+    transform: scale(.6);
+}
+
+.photo.show {
+    animation: appear .28s forwards;
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+@keyframes appear {
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.backup {
+    margin-top: 9px;
+
+    text-align: center;
+
+    color: #666;
+
+    font-size: 10px;
+}
+
+
+/* Prank reveal */
+
+.prank {
+    display: none;
+
+    margin-top: 22px;
+
+    padding: 18px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #092116,
+            #06130d
+        );
+
+    border: 1px solid #1b7545;
+
+    color: #65f0a6;
+}
+
+.prank h2 {
+    font-size: 25px;
+
+    margin-bottom: 7px;
+}
+
+.prank p {
+    color: #9de8bf;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* Footer */
+
+.footer {
+    margin-top: 15px;
+
+    color: #444;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+
+/* Mobile */
+
+@media(max-width:600px) {
+
+    .card {
+        width: 94%;
+
+        padding: 21px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .photos {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .row {
+        font-size: 11px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="grid"></div>
+
+
+<div class="card">
+
+
+    <div class="alert-bar">
+
+        <span class="dot"></span>
+
+        ⚠ SNAPCHAT ACCOUNT HACKED ⚠
+
+        <span class="dot"></span>
+
+    </div>
+
+
+    <div class="warning">
+        !
+    </div>
+
+
+    <h1>
+        UNAUTHORIZED ACCESS DETECTED
+    </h1>
+
+
+    <div class="subtitle">
+        Your Snapchat account is being compromised
+        in real-time. Data extraction in progress.
+    </div>
+
+
+    <!-- Demo account -->
+
+    <div class="account">
+
+        <div class="row">
+
+            <span class="label">
+                Username
+            </span>
+
+            <span class="value">
+                tamadaneelavati
+            </span>
+
+        </div>
+
+
+        <div class="row">
+
+            <span class="label">
+                Email
+            </span>
+
+            <span class="value">
+                neelavatitamada@gmail.com
+            </span>
+
+        </div>
+
+
+        <div class="row">
+
+            <span class="label">
+                Hack Status
+            </span>
+
+            <span
+                class="value"
+                style="color:#ff4545"
+            >
+                COMPROMISED
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Scan -->
+
+    <div class="scan">
+
+        <div class="scan-top">
+
+            <span id="scanText">
+                Initiating hack sequence...
+            </span>
+
+            <span
+                class="percent"
+                id="percent"
+            >
+                0%
+            </span>
+
+        </div>
+
+
+        <div class="progress">
+
+            <div
+                class="bar"
+                id="bar"
+            ></div>
+
+        </div>
+
+
+        <div
+            class="status"
+            id="status"
+        >
+            Establishing unauthorized connection
+        </div>
+
+    </div>
+
+
+    <!-- Photos -->
+
+    <div class="media">
+
+        <div class="media-head">
+
+            <span class="media-title">
+                ðŸ“ Encrypting Private Photos
+            </span>
+
+            <span
+                class="count"
+                id="count"
+            >
+                0 FILES
+            </span>
+
+        </div>
+
+
+        <div class="photos" id="photosContainer">
+            <!-- Photos will be generated dynamically -->
+        </div>
+
+
+        <div
+            class="backup"
+            id="backup"
+        >
+            Scanning private Snapchat memories...
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        HACK IN PROGRESS â€¢ NO REAL ACCOUNT ACCESS
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+// Create alert sound using Web Audio API
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+function playAlertSound() {
+    // Create oscillator for alarm sound
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = 800;
+    oscillator.type = 'square';
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.5);
+    
+    // Second beep
+    setTimeout(() => {
+        const osc2 = audioContext.createOscillator();
+        const gain2 = audioContext.createGain();
+        osc2.connect(gain2);
+        gain2.connect(audioContext.destination);
+        osc2.frequency.value = 1000;
+        osc2.type = 'square';
+        gain2.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        osc2.start(audioContext.currentTime);
+        osc2.stop(audioContext.currentTime + 0.5);
+    }, 200);
+}
+
+const bar = document.getElementById("bar");
+const percent = document.getElementById("percent");
+const scanText = document.getElementById("scanText");
+const status = document.getElementById("status");
+const photosContainer = document.getElementById("photosContainer");
+const count = document.getElementById("count");
+const backup = document.getElementById("backup");
+const prank = document.getElementById("prank");
+
+// All image files from your folder (no videos)
+const localImages = [
+    "images/0a16e093-aa6d-4a59-b541-10609bba013d.png",
+    "images/be130ce0-64be-4a60-bb04-994e2b9e5704.png",
+    "images/c05b63e4-df7b-43c1-9e50-f4e6d23d78f6.png",
+    "images/IMG-20260617-WA0100.jpg",
+    "images/IMG-20260617-WA0101.jpg",
+    "images/IMG-20260617-WA0102.jpg",
+    "images/IMG-20260617-WA0102_1.jpg",
+    "images/IMG-20260617-WA0103.jpg",
+    "images/IMG-20260718-WA0008.jpg",
+    "images/IMG-20260718-WA0009.jpg",
+    "images/IMG-20260718-WA0010.jpg",
+    "images/IMG-20260726-WA0000.jpg",
+    "images/IMG-20260828-WA0008.jpg",
+    "images/IMG-20260829-WA0000.jpg",
+    "images/IMG-20260829-WA0001.jpg",
+    "images/IMG-20260907-WA0007.jpg",
+    "images/IMG-20260907-WA0008.jpg",
+    "images/IMG-20260907-WA0009.jpg",
+    "images/IMG-20260917-WA0001.jpg",
+    "images/IMG-20260917-WA0002.jpg",
+    "images/IMG_20260812_233708.jpg",
+    "images/Screenshot_2026-09-27-08-57-47-832_com.snapchat.android.png",
+    "images/Screenshot_2026-09-27-08-57-57-379_com.snapchat.android.png",
+    "images/Snapchat-1004452291.jpg",
+    "images/Snapchat-1005489668.jpg",
+    "images/Snapchat-1005531616.jpg",
+    "images/Snapchat-1007052833.jpg",
+    "images/Snapchat-1007668287.jpg",
+    "images/Snapchat-1008976660.jpg",
+    "images/Snapchat-101338998.jpg",
+    "images/Snapchat-1016079416.jpg",
+    "images/Snapchat-1017264789.jpg",
+    "images/Snapchat-102152845.jpg",
+    "images/Snapchat-1022544778.jpg",
+    "images/Snapchat-1023562889.jpg",
+    "images/Snapchat-1026477357.jpg",
+    "images/Snapchat-1029901293.jpg",
+    "images/Snapchat-1030209245.jpg",
+    "images/Snapchat-1032409393.jpg",
+    "images/Snapchat-1032496931.jpg",
+    "images/Snapchat-1036032403.jpg",
+    "images/Snapchat-1038049660.jpg",
+    "images/Snapchat-1039263725.jpg",
+    "images/Snapchat-1045603331.jpg",
+    "images/Snapchat-1046574011.jpg",
+    "images/Snapchat-104911144.jpg",
+    "images/Snapchat-1050147072.jpg",
+    "images/Snapchat-1058029232.jpg",
+    "images/Snapchat-1059413343.jpg",
+    "images/Snapchat-1059919377.jpg",
+    "images/Snapchat-1072253542.jpg",
+    "images/Snapchat-1075296071.jpg",
+    "images/Snapchat-1082669681.jpg",
+    "images/Snapchat-1083372924.jpg",
+    "images/Snapchat-1083789984.jpg",
+    "images/Snapchat-1084790399.jpg",
+    "images/Snapchat-1087024317.jpg",
+    "images/Snapchat-1089203881.jpg",
+    "images/Snapchat-1092176164.jpg",
+    "images/Snapchat-109218417.jpg",
+    "images/Snapchat-1100182570.jpg",
+    "images/Snapchat-110407701.jpg",
+    "images/Snapchat-1106566977.jpg",
+    "images/Snapchat-1106854678.jpg",
+    "images/Snapchat-1113219421.jpg",
+    "images/Snapchat-1115697616.jpg",
+    "images/Snapchat-1119463896.jpg",
+    "images/Snapchat-1121312117.jpg",
+    "images/Snapchat-1124339317.jpg",
+    "images/Snapchat-1126447454.jpg",
+    "images/Snapchat-1128189473.jpg",
+    "images/Snapchat-1128827996.jpg",
+    "images/Snapchat-113030065.jpg",
+    "images/Snapchat-1131623182.jpg",
+    "images/Snapchat-1138548846.jpg",
+    "images/Snapchat-1147453128.jpg",
+    "images/Snapchat-1147928875.jpg",
+    "images/Snapchat-1151146382.jpg",
+    "images/Snapchat-1154118269.jpg",
+    "images/Snapchat-1154659117.jpg",
+    "images/Snapchat-1159570029.jpg",
+    "images/Snapchat-1161494446.jpg",
+    "images/Snapchat-1163630664.jpg",
+    "images/Snapchat-1166519911.jpg",
+    "images/Snapchat-1174536978.jpg",
+    "images/Snapchat-11746757.jpg",
+    "images/Snapchat-1177849552.jpg",
+    "images/Snapchat-1178870449.jpg",
+    "images/Snapchat-1179334414.jpg",
+    "images/Snapchat-1187627520.jpg",
+    "images/Snapchat-1192493002.jpg",
+    "images/Snapchat-119880676.jpg",
+    "images/Snapchat-120257595.jpg",
+    "images/Snapchat-1205505257.jpg",
+    "images/Snapchat-1207053121.jpg",
+    "images/Snapchat-12070729.jpg",
+    "images/Snapchat-1208226403.jpg",
+    "images/Snapchat-1216574623.jpg",
+    "images/Snapchat-1220352574.jpg",
+    "images/Snapchat-1221277467.jpg",
+    "images/Snapchat-1221714172.jpg",
+    "images/Snapchat-1222235452.jpg",
+    "images/Snapchat-1223751779.jpg",
+    "images/Snapchat-1232076937.jpg",
+    "images/Snapchat-1236290376.jpg",
+    "images/Snapchat-1239954048.jpg",
+    "images/Snapchat-1241363497.jpg",
+    "images/Snapchat-1242165177.jpg",
+    "images/Snapchat-1243037368.jpg",
+    "images/Snapchat-1245190679.jpg",
+    "images/Snapchat-1247823833.jpg",
+    "images/Snapchat-125411068.jpg",
+    "images/Snapchat-1259119315.jpg",
+    "images/Snapchat-1261517768.jpg",
+    "images/Snapchat-1262884630.jpg",
+    "images/Snapchat-1264108639.jpg",
+    "images/Snapchat-1269421055.jpg",
+    "images/Snapchat-1273682428.jpg",
+    "images/Snapchat-1274862968.jpg",
+    "images/Snapchat-1275249935.jpg",
+    "images/Snapchat-1277037313.jpg",
+    "images/Snapchat-1277433436.jpg",
+    "images/Snapchat-1279726160.jpg",
+    "images/Snapchat-1281350400.jpg",
+    "images/Snapchat-1284653582.jpg",
+    "images/Snapchat-1288774365.jpg",
+    "images/Snapchat-128972067.jpg",
+    "images/Snapchat-1296519819.jpg",
+    "images/Snapchat-130252702.jpg",
+    "images/Snapchat-131288705.jpg",
+    "images/Snapchat-1325158650.jpg",
+    "images/Snapchat-1339053372.jpg",
+    "images/Snapchat-1344097512.jpg",
+    "images/Snapchat-134925407.jpg",
+    "images/Snapchat-1351580957.jpg",
+    "images/Snapchat-1352532286.jpg",
+    "images/Snapchat-1358000552.jpg",
+    "images/Snapchat-135834326.jpg",
+    "images/Snapchat-136191479.jpg",
+    "images/Snapchat-1362550824.jpg",
+    "images/Snapchat-136744734.jpg",
+    "images/Snapchat-1370967902.jpg",
+    "images/Snapchat-1372864439.jpg",
+    "images/Snapchat-138411938.jpg",
+    "images/Snapchat-1385050699.jpg",
+    "images/Snapchat-1388645431.jpg",
+    "images/Snapchat-139184576.jpg",
+    "images/Snapchat-139243656.jpg",
+    "images/Snapchat-1398085700.jpg",
+    "images/Snapchat-1401524188.jpg",
+    "images/Snapchat-1420298495.jpg",
+    "images/Snapchat-1422067285.jpg",
+    "images/Snapchat-1423343171.jpg",
+    "images/Snapchat-1426506021.jpg",
+    "images/Snapchat-1430410560.jpg",
+    "images/Snapchat-1434917939.jpg",
+    "images/Snapchat-144083316.jpg",
+    "images/Snapchat-1442660446.jpg",
+    "images/Snapchat-1454901031.jpg",
+    "images/Snapchat-1457398459.jpg",
+    "images/Snapchat-1459632237.jpg",
+    "images/Snapchat-1460203860.jpg",
+    "images/Snapchat-1460632901.jpg",
+    "images/Snapchat-1461057051.jpg",
+    "images/Snapchat-1464747234.jpg",
+    "images/Snapchat-1466028722.jpg",
+    "images/Snapchat-1467752196.jpg",
+    "images/Snapchat-1467791175.jpg",
+    "images/Snapchat-1470718342.jpg",
+    "images/Snapchat-1476724223.jpg",
+    "images/Snapchat-1478534790.jpg",
+    "images/Snapchat-1481510585.jpg",
+    "images/Snapchat-1494419001.jpg",
+    "images/Snapchat-1494576866.jpg",
+    "images/Snapchat-1497506074.jpg",
+    "images/Snapchat-1498572613.jpg",
+    "images/Snapchat-1499976515.jpg",
+    "images/Snapchat-1502884669.jpg",
+    "images/Snapchat-1503005873.jpg",
+    "images/Snapchat-15059984.jpg",
+    "images/Snapchat-1512345655.jpg",
+    "images/Snapchat-1521103952.jpg",
+    "images/Snapchat-1522393718.jpg",
+    "images/Snapchat-152661291.jpg",
+    "images/Snapchat-152892670.jpg",
+    "images/Snapchat-1529547745.jpg",
+    "images/Snapchat-1530186800.jpg",
+    "images/Snapchat-1536736722.jpg",
+    "images/Snapchat-154207135.jpg",
+    "images/Snapchat-1552198536.jpg",
+    "images/Snapchat-1554729956.jpg",
+    "images/Snapchat-1554956474.jpg",
+    "images/Snapchat-1557404580.jpg",
+    "images/Snapchat-1571961629.jpg",
+    "images/Snapchat-1577256851.jpg",
+    "images/Snapchat-1582330785.jpg",
+    "images/Snapchat-158467460.jpg",
+    "images/Snapchat-1593370206.jpg",
+    "images/Snapchat-1594275973.jpg",
+    "images/Snapchat-1595667607.jpg",
+    "images/Snapchat-1598552151.jpg",
+    "images/Snapchat-1598665126.jpg",
+    "images/Snapchat-160587161.jpg",
+    "images/Snapchat-1612062282.jpg",
+    "images/Snapchat-1619205957.jpg",
+    "images/Snapchat-1627161467.jpg",
+    "images/Snapchat-1627446773.jpg",
+    "images/Snapchat-1631659708.jpg",
+    "images/Snapchat-1641408405.jpg",
+    "images/Snapchat-1641601547.jpg",
+    "images/Snapchat-1645845107.jpg",
+    "images/Snapchat-1657090151.jpg",
+    "images/Snapchat-1657732567.jpg",
+    "images/Snapchat-1658713139.jpg",
+    "images/Snapchat-1666610866.jpg",
+    "images/Snapchat-1669076521.jpg",
+    "images/Snapchat-16781583.jpg",
+    "images/Snapchat-1691616628.jpg",
+    "images/Snapchat-1692772225.jpg",
+    "images/Snapchat-1702840267.jpg",
+    "images/Snapchat-1705602435.jpg",
+    "images/Snapchat-1709091362.jpg",
+    "images/Snapchat-1710123115.jpg",
+    "images/Snapchat-1711857021.jpg",
+    "images/Snapchat-1726870498.jpg",
+    "images/Snapchat-1727618925.jpg",
+    "images/Snapchat-1730212004.jpg",
+    "images/Snapchat-1730721488.jpg",
+    "images/Snapchat-1731504761.jpg",
+    "images/Snapchat-1732042525.jpg",
+    "images/Snapchat-175724683.jpg",
+    "images/Snapchat-1759270256.jpg",
+    "images/Snapchat-1763032771.jpg",
+    "images/Snapchat-1763839633.jpg",
+    "images/Snapchat-1766232362.jpg",
+    "images/Snapchat-176797586.jpg",
+    "images/Snapchat-1768307083.jpg",
+    "images/Snapchat-1769364569.jpg",
+    "images/Snapchat-1770757323.jpg",
+    "images/Snapchat-1771305361.jpg",
+    "images/Snapchat-1774320767.jpg",
+    "images/Snapchat-1777210232.jpg",
+    "images/Snapchat-1777394334.jpg",
+    "images/Snapchat-1790479688.jpg",
+    "images/Snapchat-1792132086.jpg",
+    "images/Snapchat-1802815859.jpg",
+    "images/Snapchat-1804622047.jpg",
+    "images/Snapchat-1816835247.jpg",
+    "images/Snapchat-1820370887.jpg",
+    "images/Snapchat-1821146041.jpg",
+    "images/Snapchat-1824101181.jpg",
+    "images/Snapchat-1825574892.jpg",
+    "images/Snapchat-182752514.jpg",
+    "images/Snapchat-1830226834.jpg",
+    "images/Snapchat-183327102.jpg",
+    "images/Snapchat-1834227052.jpg",
+    "images/Snapchat-1837170480.jpg",
+    "images/Snapchat-1837744736.jpg",
+    "images/Snapchat-1840189080.jpg",
+    "images/Snapchat-1840816719.jpg",
+    "images/Snapchat-1841996795.jpg",
+    "images/Snapchat-1842579839.jpg",
+    "images/Snapchat-1844543302.jpg",
+    "images/Snapchat-1855251551.jpg",
+    "images/Snapchat-186009209.jpg",
+    "images/Snapchat-1862956360.jpg",
+    "images/Snapchat-1864262903.jpg",
+    "images/Snapchat-1869803879.jpg",
+    "images/Snapchat-1881270652.jpg",
+    "images/Snapchat-1885642517.jpg",
+    "images/Snapchat-1893068742.jpg",
+    "images/Snapchat-1894709554.jpg",
+    "images/Snapchat-1898152188.jpg",
+    "images/Snapchat-1899868244.jpg",
+    "images/Snapchat-1900946668.jpg",
+    "images/Snapchat-190205938.jpg",
+    "images/Snapchat-1906157319.jpg",
+    "images/Snapchat-1907554095.jpg",
+    "images/Snapchat-1910530395.jpg",
+    "images/Snapchat-1911707041.jpg",
+    "images/Snapchat-1915253194.jpg",
+    "images/Snapchat-1919275500.jpg",
+    "images/Snapchat-1922736062.jpg",
+    "images/Snapchat-1932810609.jpg",
+    "images/Snapchat-1936106516.jpg",
+    "images/Snapchat-1936247843.jpg",
+    "images/Snapchat-1937356019.jpg",
+    "images/Snapchat-1939831322.jpg",
+    "images/Snapchat-1939849886.jpg",
+    "images/Snapchat-1940697114.jpg",
+    "images/Snapchat-1948044795.jpg",
+    "images/Snapchat-1964199602.jpg",
+    "images/Snapchat-1965316199.jpg",
+    "images/Snapchat-1973688599.jpg",
+    "images/Snapchat-1979658257.jpg",
+    "images/Snapchat-1980798236.jpg",
+    "images/Snapchat-198314412.jpg",
+    "images/Snapchat-1988403439.jpg",
+    "images/Snapchat-1990371390.jpg",
+    "images/Snapchat-1992345894.jpg",
+    "images/Snapchat-1996919949.jpg",
+    "images/Snapchat-1999319584.jpg",
+    "images/Snapchat-1999561574.jpg",
+    "images/Snapchat-2007035319.jpg",
+    "images/Snapchat-2007399347.jpg",
+    "images/Snapchat-2019346554.jpg",
+    "images/Snapchat-2019457334.jpg",
+    "images/Snapchat-2025680889.jpg",
+    "images/Snapchat-2029786007.jpg",
+    "images/Snapchat-2039382236.jpg",
+    "images/Snapchat-2040791962.jpg",
+    "images/Snapchat-2042616495.jpg",
+    "images/Snapchat-2042695501.jpg",
+    "images/Snapchat-2049963899.jpg",
+    "images/Snapchat-2053219838.jpg",
+    "images/Snapchat-2056196322.jpg",
+    "images/Snapchat-206000373.jpg",
+    "images/Snapchat-2062533500.jpg",
+    "images/Snapchat-2063410859.jpg",
+    "images/Snapchat-2067883768.jpg",
+    "images/Snapchat-2073960609.jpg",
+    "images/Snapchat-2079197551.jpg",
+    "images/Snapchat-2083574046.jpg",
+    "images/Snapchat-2087675966.jpg",
+    "images/Snapchat-2090032648.jpg",
+    "images/Snapchat-2099673268.jpg",
+    "images/Snapchat-2102218406.jpg",
+    "images/Snapchat-2103491954.jpg",
+    "images/Snapchat-2105122130.jpg",
+    "images/Snapchat-2105595426.jpg",
+    "images/Snapchat-210605714.jpg",
+    "images/Snapchat-2113145289.jpg",
+    "images/Snapchat-2114240839.jpg",
+    "images/Snapchat-2115940220.jpg",
+    "images/Snapchat-2119520548.jpg",
+    "images/Snapchat-2120441521.jpg",
+    "images/Snapchat-2120892210.jpg",
+    "images/Snapchat-2120898422.jpg",
+    "images/Snapchat-2121562140.jpg",
+    "images/Snapchat-2125546151.jpg",
+    "images/Snapchat-2132132297.jpg",
+    "images/Snapchat-21325120.jpg",
+    "images/Snapchat-2138704203.jpg",
+    "images/Snapchat-221052269.jpg",
+    "images/Snapchat-223581302.jpg",
+    "images/Snapchat-224894412.jpg",
+    "images/Snapchat-229025060.jpg",
+    "images/Snapchat-229676059.jpg",
+    "images/Snapchat-231544347.jpg",
+    "images/Snapchat-231655232.jpg",
+    "images/Snapchat-23757335.jpg",
+    "images/Snapchat-240197696.jpg",
+    "images/Snapchat-240787348.jpg",
+    "images/Snapchat-241546849.jpg",
+    "images/Snapchat-243786429.jpg",
+    "images/Snapchat-253584953.jpg",
+    "images/Snapchat-263652731.jpg",
+    "images/Snapchat-26427288.jpg",
+    "images/Snapchat-264413742.jpg",
+    "images/Snapchat-266269532.jpg",
+    "images/Snapchat-269605558.jpg",
+    "images/Snapchat-271386080.jpg",
+    "images/Snapchat-2798165.jpg",
+    "images/Snapchat-280746398.jpg",
+    "images/Snapchat-283549999.jpg",
+    "images/Snapchat-288302283.jpg",
+    "images/Snapchat-288440853.jpg",
+    "images/Snapchat-28929647.jpg",
+    "images/Snapchat-290091166.jpg",
+    "images/Snapchat-290403008.jpg",
+    "images/Snapchat-295633478.jpg",
+    "images/Snapchat-298021250.jpg",
+    "images/Snapchat-299276466.jpg",
+    "images/Snapchat-30644337.jpg",
+    "images/Snapchat-30938647.jpg",
+    "images/Snapchat-310184532.jpg",
+    "images/Snapchat-313755672.jpg",
+    "images/Snapchat-315209641.jpg",
+    "images/Snapchat-315652772.jpg",
+    "images/Snapchat-319147727.jpg",
+    "images/Snapchat-321541533.jpg",
+    "images/Snapchat-326164769.jpg",
+    "images/Snapchat-334441621.jpg",
+    "images/Snapchat-354710816.jpg",
+    "images/Snapchat-356513342.jpg",
+    "images/Snapchat-359632332.jpg",
+    "images/Snapchat-360392799.jpg",
+    "images/Snapchat-362563482.jpg",
+    "images/Snapchat-363521077.jpg",
+    "images/Snapchat-370285413.jpg",
+    "images/Snapchat-371588495.jpg",
+    "images/Snapchat-374113954.jpg",
+    "images/Snapchat-377812994.jpg",
+    "images/Snapchat-379936769.jpg",
+    "images/Snapchat-380716070.jpg",
+    "images/Snapchat-383141620.jpg",
+    "images/Snapchat-386857641.jpg",
+    "images/Snapchat-387119421.jpg",
+    "images/Snapchat-389813440.jpg",
+    "images/Snapchat-393187995.jpg",
+    "images/Snapchat-395813275.jpg",
+    "images/Snapchat-399505618.jpg",
+    "images/Snapchat-399742895.jpg",
+    "images/Snapchat-402455707.jpg",
+    "images/Snapchat-403192772.jpg",
+    "images/Snapchat-407284968.jpg",
+    "images/Snapchat-415743116.jpg",
+    "images/Snapchat-416027522.jpg",
+    "images/Snapchat-426856952.jpg",
+    "images/Snapchat-428084955.jpg",
+    "images/Snapchat-432347640.jpg",
+    "images/Snapchat-433404804.jpg",
+    "images/Snapchat-436008704.jpg",
+    "images/Snapchat-442514454.jpg",
+    "images/Snapchat-455408705.jpg",
+    "images/Snapchat-457610861.jpg",
+    "images/Snapchat-457860208.jpg",
+    "images/Snapchat-462632406.jpg",
+    "images/Snapchat-463890792.jpg",
+    "images/Snapchat-469890013.jpg",
+    "images/Snapchat-476436537.jpg",
+    "images/Snapchat-476583379.jpg",
+    "images/Snapchat-477822824.jpg",
+    "images/Snapchat-497136997.jpg",
+    "images/Snapchat-498965505.jpg",
+    "images/Snapchat-499141251.jpg",
+    "images/Snapchat-499985089.jpg",
+    "images/Snapchat-502704945.jpg",
+    "images/Snapchat-504426953.jpg",
+    "images/Snapchat-50517034.jpg",
+    "images/Snapchat-505713184.jpg",
+    "images/Snapchat-506125138.jpg",
+    "images/Snapchat-511416835.jpg",
+    "images/Snapchat-512587003.jpg",
+    "images/Snapchat-513288757.jpg",
+    "images/Snapchat-515040704.jpg",
+    "images/Snapchat-521908505.jpg",
+    "images/Snapchat-524249170.jpg",
+    "images/Snapchat-527142303.jpg",
+    "images/Snapchat-530042918.jpg",
+    "images/Snapchat-531149505.jpg",
+    "images/Snapchat-537244679.jpg",
+    "images/Snapchat-545186762.jpg",
+    "images/Snapchat-546462729.jpg",
+    "images/Snapchat-548504737.jpg",
+    "images/Snapchat-549406671.jpg",
+    "images/Snapchat-550199464.jpg",
+    "images/Snapchat-552941158.jpg",
+    "images/Snapchat-557644698.jpg",
+    "images/Snapchat-559323966.jpg",
+    "images/Snapchat-559617697.jpg",
+    "images/Snapchat-562896786 - Copy.jpg",
+    "images/Snapchat-562896786.jpg",
+    "images/Snapchat-563932383.jpg",
+    "images/Snapchat-565282786.jpg",
+    "images/Snapchat-565514873.jpg",
+    "images/Snapchat-568612349.jpg",
+    "images/Snapchat-573528217.jpg",
+    "images/Snapchat-582295319.jpg",
+    "images/Snapchat-587432301.jpg",
+    "images/Snapchat-588018944.jpg",
+    "images/Snapchat-588679796.jpg",
+    "images/Snapchat-589155417.jpg",
+    "images/Snapchat-59768684.jpg",
+    "images/Snapchat-604385535.jpg",
+    "images/Snapchat-60729307.jpg",
+    "images/Snapchat-614618666.jpg",
+    "images/Snapchat-618367730.jpg",
+    "images/Snapchat-62951060.jpg",
+    "images/Snapchat-629902709.jpg",
+    "images/Snapchat-632589613.jpg",
+    "images/Snapchat-638555957.jpg",
+    "images/Snapchat-640474157.jpg",
+    "images/Snapchat-641394825.jpg",
+    "images/Snapchat-642249745.jpg",
+    "images/Snapchat-652914463.jpg",
+    "images/Snapchat-654457580.jpg",
+    "images/Snapchat-65474493.jpg",
+    "images/Snapchat-658399791.jpg",
+    "images/Snapchat-660164204.jpg",
+    "images/Snapchat-661818612.jpg",
+    "images/Snapchat-6699415.jpg",
+    "images/Snapchat-681311433.jpg",
+    "images/Snapchat-683115807.jpg",
+    "images/Snapchat-683547431.jpg",
+    "images/Snapchat-685430425.jpg",
+    "images/Snapchat-689623663.jpg",
+    "images/Snapchat-690150006.jpg",
+    "images/Snapchat-694110173.jpg",
+    "images/Snapchat-694562696.jpg",
+    "images/Snapchat-694838327.jpg",
+    "images/Snapchat-699264310.jpg",
+    "images/Snapchat-70021103.jpg",
+    "images/Snapchat-702327942.jpg",
+    "images/Snapchat-703012347.jpg",
+    "images/Snapchat-703163971.jpg",
+    "images/Snapchat-710059298.jpg",
+    "images/Snapchat-712606988.jpg",
+    "images/Snapchat-713707781.jpg",
+    "images/Snapchat-71696666.jpg",
+    "images/Snapchat-717682077.jpg",
+    "images/Snapchat-720654150.jpg",
+    "images/Snapchat-720777424.jpg",
+    "images/Snapchat-724834755.jpg",
+    "images/Snapchat-72758158.jpg",
+    "images/Snapchat-727978471.jpg",
+    "images/Snapchat-732100278.jpg",
+    "images/Snapchat-738696635.jpg",
+    "images/Snapchat-740009833.jpg",
+    "images/Snapchat-743489177.jpg",
+    "images/Snapchat-743517401.jpg",
+    "images/Snapchat-745711363.jpg",
+    "images/Snapchat-74933069.jpg",
+    "images/Snapchat-753480268.jpg",
+    "images/Snapchat-760319022.jpg",
+    "images/Snapchat-762963078.jpg",
+    "images/Snapchat-764958479.jpg",
+    "images/Snapchat-765332878.jpg",
+    "images/Snapchat-773965847.jpg",
+    "images/Snapchat-778706042.jpg",
+    "images/Snapchat-787763238.jpg",
+    "images/Snapchat-796161286.jpg",
+    "images/Snapchat-796371554.jpg",
+    "images/Snapchat-798840598.jpg",
+    "images/Snapchat-801639835.jpg",
+    "images/Snapchat-808919597.jpg",
+    "images/Snapchat-820037086.jpg",
+    "images/Snapchat-821584257.jpg",
+    "images/Snapchat-824246464.jpg",
+    "images/Snapchat-8266000.jpg",
+    "images/Snapchat-828687758.jpg",
+    "images/Snapchat-829073327.jpg",
+    "images/Snapchat-83150550.jpg",
+    "images/Snapchat-833742689.jpg",
+    "images/Snapchat-837599570.jpg",
+    "images/Snapchat-841873087.jpg",
+    "images/Snapchat-842667754.jpg",
+    "images/Snapchat-850731208.jpg",
+    "images/Snapchat-851602978.jpg",
+    "images/Snapchat-855520472.jpg",
+    "images/Snapchat-855722350.jpg",
+    "images/Snapchat-861623015.jpg",
+    "images/Snapchat-86252156.jpg",
+    "images/Snapchat-86652409.jpg",
+    "images/Snapchat-867309582.jpg",
+    "images/Snapchat-867749491.jpg",
+    "images/Snapchat-874004240.jpg",
+    "images/Snapchat-874015079.jpg",
+    "images/Snapchat-880539275.jpg",
+    "images/Snapchat-883474694.jpg",
+    "images/Snapchat-887247.jpg",
+    "images/Snapchat-887510853.jpg",
+    "images/Snapchat-889096856.jpg",
+    "images/Snapchat-896426451.jpg",
+    "images/Snapchat-896744389.jpg",
+    "images/Snapchat-900949110.jpg",
+    "images/Snapchat-903907577.jpg",
+    "images/Snapchat-910356632.jpg",
+    "images/Snapchat-911574484.jpg",
+    "images/Snapchat-912100465.jpg",
+    "images/Snapchat-918417185.jpg",
+    "images/Snapchat-918818043.jpg",
+    "images/Snapchat-919627869.jpg",
+    "images/Snapchat-922697558.jpg",
+    "images/Snapchat-929046903.jpg",
+    "images/Snapchat-931020376.jpg",
+    "images/Snapchat-932702617.jpg",
+    "images/Snapchat-933040320.jpg",
+    "images/Snapchat-936356402.jpg",
+    "images/Snapchat-938025559.jpg",
+    "images/Snapchat-940152421.jpg",
+    "images/Snapchat-943954902.jpg",
+    "images/Snapchat-947550849.jpg",
+    "images/Snapchat-951086970.jpg",
+    "images/Snapchat-951475985.jpg",
+    "images/Snapchat-960034467.jpg",
+    "images/Snapchat-960624154.jpg",
+    "images/Snapchat-961126066.jpg",
+    "images/Snapchat-974233974.jpg",
+    "images/Snapchat-975580577.jpg",
+    "images/Snapchat-99044082.jpg"
+];
+
+// Total number of photos
+const TOTAL_PHOTOS = localImages.length;
+console.log("Total images loaded:", TOTAL_PHOTOS);
+console.log("localImages array length:", localImages.length);
+
+// Generate photo elements from local images
+for (let i = 0; i < TOTAL_PHOTOS; i++) {
+    const photoDiv = document.createElement("div");
+    photoDiv.className = "photo";
+    
+    const img = document.createElement("img");
+    img.src = localImages[i];
+    img.loading = "lazy"; // Lazy loading for better performance
+    img.onerror = function() {
+        console.error("Failed to load:", localImages[i]);
+    };
+    
+    photoDiv.appendChild(img);
+    photosContainer.appendChild(photoDiv);
+}
+
+console.log("Generated", TOTAL_PHOTOS, "photo elements");
+
+const photos = document.querySelectorAll(".photo");
+let progress = 0;
+let photoIndex = 0;
+
+const messages = [
+    "Connecting to Snapchat servers...",
+    "Bypassing security protocols...",
+    "Accessing user database...",
+    "Extracting account credentials...",
+    "Downloading private photos...",
+    "Encrypting stolen data..."
+];
+
+const timer = setInterval(() => {
+    progress += Math.floor(Math.random() * 5) + 3;
+
+    if (progress > 100) {
+        progress = 100;
+    }
+
+    bar.style.width = progress + "%";
+    percent.textContent = progress + "%";
+
+    let index = Math.floor(progress / 18);
+    if (index >= messages.length) {
+        index = messages.length - 1;
+    }
+
+    scanText.textContent = messages[index];
+    status.textContent = "HACKING IN PROGRESS • " + progress + "%";
+
+    // Show demo photos quickly - multiple at once
+    if (progress >= 10 && photoIndex < photos.length) {
+        // Show 8-12 photos at once for much faster effect
+        const photosToShow = Math.min(
+            Math.floor(Math.random() * 5) + 8,
+            photos.length - photoIndex
+        );
+        
+        for (let i = 0; i < photosToShow; i++) {
+            if (photoIndex < photos.length) {
+                photos[photoIndex].classList.add("show");
+                photoIndex++;
+            }
+        }
+
+        count.textContent = photoIndex + " FILES";
+        backup.textContent = "Encrypting media files • " + photoIndex + "/" + TOTAL_PHOTOS;
+    }
+
+    // Finish
+    if (progress >= 100) {
+        clearInterval(timer);
+        
+        // Force show any remaining photos
+        while (photoIndex < photos.length) {
+            photos[photoIndex].classList.add("show");
+            photoIndex++;
+        }
+        
+        console.log("Animation complete. Total photos shown:", photoIndex);
+
+        scanText.textContent = "Account compromised successfully";
+        status.textContent = "Data extraction complete";
+        count.textContent = TOTAL_PHOTOS + " FILES ENCRYPTED";
+        backup.textContent = "All media files encrypted and uploaded";
+
+        // Reveal prank after short delay
+        setTimeout(() => {
+            prank.style.display = "block";
+            prank.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }, 900);
+    }
+
+}, 80); // Faster interval for quicker photo display
+
+// HACKING EFFECT - After 5 seconds, sound alert and blank screen
+setTimeout(() => {
+    // Play alert sound
+    playAlertSound();
+    
+    // Add glitch effect
+    document.body.style.animation = 'glitch 0.3s infinite';
+    
+    setTimeout(() => {
+        // Blank screen with hacking message
+        document.body.innerHTML = `
+            <div style="
+                position: fixed;
+                inset: 0;
+                background: #000;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                color: #0f0;
+                font-family: 'Courier New', monospace;
+                z-index: 99999;
+            ">
+                <div style="
+                    font-size: 32px;
+                    font-weight: bold;
+                    text-shadow: 0 0 20px #f00;
+                    animation: blink 0.5s infinite;
+                    margin-bottom: 20px;
+                    padding: 0 20px;
+                    text-align: center;
+                    color: #f00;
+                ">
+                    ⚠ HACKED ⚠
+                </div>
+                <div style="
+                    font-size: 24px;
+                    color: #0f0;
+                    text-shadow: 0 0 15px #0f0;
+                    margin-bottom: 30px;
+                    padding: 0 20px;
+                    text-align: center;
+                    font-weight: bold;
+                ">
+                    YOUR MOBILE SNAP ACCOUNT IS HACKED
+                </div>
+                <div style="
+                    margin-top: 20px;
+                    font-size: 14px;
+                    color: #0f0;
+                    text-align: center;
+                    max-width: 90%;
+                    padding: 0 20px;
+                    line-height: 1.8;
+                ">
+                    All your private data has been compromised.<br>
+                    Photos and messages are now being uploaded.<br>
+                    Connection cannot be terminated.
+                </div>
+            </div>
+            <style>
+                @keyframes blink {
+                    0%, 49% { opacity: 1; }
+                    50%, 100% { opacity: 0.3; }
+                }
+                @keyframes glitch {
+                    0% { transform: translate(0); }
+                    20% { transform: translate(-2px, 2px); }
+                    40% { transform: translate(2px, -2px); }
+                    60% { transform: translate(-2px, -2px); }
+                    80% { transform: translate(2px, 2px); }
+                    100% { transform: translate(0); }
+                }
+                @media(max-width: 600px) {
+                    div[style*="font-size: 32px"] {
+                        font-size: 24px !important;
+                    }
+                    div[style*="font-size: 24px"] {
+                        font-size: 18px !important;
+                    }
+                    div[style*="font-size: 14px"] {
+                        font-size: 12px !important;
+                    }
+                }
+            </style>
+        `;
+    }, 500); // 0.5 second delay for dramatic effect after sound
+    
+}, 10000); // 10 seconds after page load
+
+</script>
+
+</body>
+</html>
+
+
+
